@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选择商品</title>
+    <style>
+        img {
+            width: 80%;
+        }
+        #clothes-show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+        }
+        #buttons {
+            position: fixed;
+            bottom: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        #buttons a {
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="clothes-show">
+            {% for image in imageList %}
+                <img src="{{image}}" alt="" data-index="{{loop.index}}" style="display:none;" class="image">
+            {% endfor %}
+        </div>
+        <div id="buttons">
+            <a href="javascript:void(0)" onclick="upHandle()">
+                <img src="/static/icon/down.png" alt="" width="50"/>
+            </a>
+            <a href="javascript:void(0)" onclick="selectedHandle()">
+                <img src="/static/icon/check.png" alt="" width="50"/>
+            </a>
+            <a href="javascript:void(0)" onclick="downHandle()">
+                <img src="/static/icon/up.png" alt="" width="50"/>
+            </a>
+        </div>
+    </div>
+    <script>
+        let store = {
+            num: 0
+        };
+        function upHandle() {
+            store =  { num: store.num-1 };
+            setElement(store.num)
+        }
+        function downHandle() {
+            store =  { num: store.num+1 };
+            setElement(store.num)
+        }
+        function selectedHandle() {
+            alert('选中第'+(store.num+1)+'个')
+        }
+        function setElement(index){
+            const element = document.getElementsByClassName('image')
+            for(let x in element){
+                if (index == x) {
+                    element[x].style.display = 'block';
+                } else {
+                    if (typeof element[x] == 'object') {
+                        element[x].style.display = 'none';
+                    }
+                }
+            }
+        }
+        setElement(0);
+    </script>
+</body>
+</html>
